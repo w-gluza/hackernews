@@ -1,3 +1,6 @@
+import { createGlobalStyle } from 'styled-components';
+
+export default createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 
 /* -------- SIMPLE RESET ------------- */
@@ -30,29 +33,33 @@ a:hover,
 a:active {
   cursor: pointer;
 }
+/* ------------------------------------- */
+h1 {
+font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.15em;
+  color: #ffffff;
+}
 
 h2 {
-  font-size: 1.6rem;
-  font-weight: 300;
+  font-size: 1.4rem;
+  font-weight: 700;
   line-height: 1.5;
   letter-spacing: 0.15em;
   color: #424242;
+
 }
 
-.main {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  height: 100vh;
-  background-color: #f1f1f1;
-}
-
-.stories__preview {
+.aside {
   display: grid;
   grid-template-rows: repeat(12 1fr);
-  padding: 20px;
-  background-color: #ffffff;
 }
 .iframe {
   height: 100%;
   width: 100%;
 }
+p {
+  line-height: 1.8;
+}
+`;

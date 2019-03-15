@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 
+import Main from '../styledComponents/Main';
+import Author from '../styledComponents/Author';
+import Button from '../styledComponents/Button';
+import Story from '../styledComponents/Story';
+import StoryFooter from '../styledComponents/StoryFooter';
+
 class Frame extends Component {
   constructor(props) {
     super(props);
@@ -7,13 +13,8 @@ class Frame extends Component {
     this.state = {
       articles: [],
       frameUrl: [],
-      frameID: [],
-      fetching: false
+      frameID: []
     };
-  }
-
-  componentWillMount() {
-    this.setState({ fetching: true });
   }
 
   componentDidUpdate(prevProps) {
@@ -22,7 +23,6 @@ class Frame extends Component {
     }
 
     let links = this.props.links;
-    // this.setState({ fetching: true });
     links.map((link, linkIndex) =>
       fetch(link)
         .then(response => response.json())
@@ -39,46 +39,45 @@ class Frame extends Component {
         )
     );
   }
-  componentDidMount() {
-    this.setState({ fetching: false });
-  }
+
   render() {
-    if (this.state.fetching === true) {
-      return <div>FETCHING</div>;
-    } else {
-      return (
-        <main className="main">
-          <aside className="stories__preview">
-            {this.state.articles.map(object => (
-              <div key={object.id} id={object.id}>
-                <h2>{object.title}</h2>
-                <button
+    return (
+      <Main>
+        <aside className="aside">
+          {this.state.articles.map(object => (
+            <Story key={object.id} id={object.id}>
+              <h2>{object.title}</h2>
+              <StoryFooter>
+                <Author>Posted by: {object.by}</Author>
+                <Button
                   onClick={() => {
-                    this.setState({ frameUrl: object.url, frameID: object.id });
+                    this.setState({
+                      frameUrl: object.url,
+                      frameID: object.id
+                    });
                   }}
                   style={
                     this.state.frameID === object.id
-                      ? { backgroundColor: 'aqua' }
-                      : { backgroundColor: 'green' }
+                      ? { color: '#ffc124' }
+                      : { color: '#424242' }
                   }
                 >
-                  See More
-                </button>
-              </div>
-            ))}
-          </aside>
-          <article className="article__preview">
-            <iframe
-              className="iframe"
-              title={this.state.frameID}
-              key={this.state.frameID}
-              src={this.state.frameUrl}
-            />
-            <p>{this.state.frameID}</p>
-          </article>
-        </main>
-      );
-    }
+                  Visit Website
+                </Button>
+              </StoryFooter>
+            </Story>
+          ))}
+        </aside>
+        <article>
+          <iframe
+            className="iframe"
+            title={this.state.frameID}
+            key={this.state.frameID}
+            src={this.state.frameUrl}
+          />
+        </article>
+      </Main>
+    );
   }
 }
 export default Frame;

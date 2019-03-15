@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Frame from './components/Frame';
+import Header from './components/Header';
 
-import './App.css';
+import GlobalStyle from './styledComponents/Global';
 
 class App extends Component {
   constructor(props) {
@@ -28,9 +29,11 @@ class App extends Component {
         '.json?print=pretty'
     );
     return (
-      <div>
+      <>
+        <GlobalStyle />
+        <Header />
         <Frame links={links} />
-      </div>
+      </>
     );
   }
 }
