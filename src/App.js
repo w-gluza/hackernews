@@ -1,25 +1,35 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Frame from './components/Frame';
+
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: []
+    };
+  }
+
+  componentDidMount() {
+    fetch('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
+      .then(response => response.json())
+      .then(data => this.setState({ data: data }));
+  }
+
   render() {
+    const topStories = this.state.data.slice(0, 10);
+    // console.log(topStories);
+    let links = topStories.map(
+      link =>
+        ' https://hacker-news.firebaseio.com/v0/item/' +
+        link +
+        '.json?print=pretty'
+    );
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <Frame links={links} />
       </div>
     );
   }
